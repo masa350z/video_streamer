@@ -35,8 +35,6 @@ function loadDirectory(relativePath) {
 function renderBreadcrumb(relativePath) {
   breadcrumbEl.innerHTML = "";
 
-  // relativePath を "/" で分割してパーツにする
-  // 例: "folder1/folder2" -> ["folder1", "folder2"]
   const parts = relativePath ? relativePath.split(pathSep()) : [];
 
   // ルートへのリンク
@@ -48,22 +46,30 @@ function renderBreadcrumb(relativePath) {
 
   let pathSoFar = "";
   for (let i = 0; i < parts.length; i++) {
+    // セパレータ
     const sepSpan = document.createElement("span");
     sepSpan.className = "breadcrumb-sep";
     sepSpan.textContent = "/";
     breadcrumbEl.appendChild(sepSpan);
 
+    // 今回のパス要素
     const part = parts[i];
-    pathSoFar += (i === 0 ? "" : pathSep()) + part;
+    // 次の段階で使うパスを先に組み立てる
+    const nextPath = pathSoFar + (i === 0 ? "" : pathSep()) + part;
 
     const partSpan = document.createElement("span");
     partSpan.className = "breadcrumb-item";
     partSpan.textContent = part;
-    partSpan.addEventListener("click", () => loadDirectory(pathSoFar));
+
+    // イベントリスナーには「その時点のnextPath」を渡す
+    partSpan.addEventListener("click", () => loadDirectory(nextPath));
+
     breadcrumbEl.appendChild(partSpan);
+
+    // ループ最後にpathSoFarを更新しておく
+    pathSoFar = nextPath;
   }
 }
-
 // ディレクトリ一覧の表示
 function renderDirectory(treeData) {
   directoryListEl.innerHTML = "";
