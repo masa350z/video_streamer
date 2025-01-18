@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  video-server:
+    build: .
+    container_name: video_server
+    # プロジェクトディレクトリの全体をコンテナ内の /usr/src/app にマウント
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+      # ここで「ホスト側の動画ディレクトリの絶対パス:/videos」という形でマウント
+      # 例: /Users/yourname/Videos:/videos
+      # 必ずご自分の環境に合わせて書き換えてください
+      - /Volumes/RAID1_DATADISK/video/R_C/Movie:/videos
+    ports:
+      - "3000:3000"
+    environment:
+      - VIDEO_DIRECTORY=/videos  # 動画が配置されたディレクトリのルート
+    # 必要に応じて restart ポリシーなど
+    # restart: always

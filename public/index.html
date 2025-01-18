@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <!-- 追加: スマホでの画面幅を正しく解釈させるための meta -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ローカルネットワーク向け動画視聴サイト</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="app">
+    <div class="header">
+      <h1>ローカル動画サーバー</h1>
+    </div>
+
+    <div id="breadcrumb"></div>
+    <div id="directory-list"></div>
+
+    <div id="video-player" class="hidden">
+      <button id="close-player">× 閉じる</button>
+      <video id="player" controls playsinline></video>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
